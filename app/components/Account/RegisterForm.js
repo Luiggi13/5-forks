@@ -6,8 +6,14 @@ export default function RegisterForm() {
 
     const [hidePassword, setHidePassword] = useState(true);
     const [repeatHidePassword, setRepeatHidePassword] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
+
     const register = () => {
-        console.log('button');
+        console.log(`Email: ${email}`);
+        console.log(`password: ${password}`);
+        console.log(`repeatPassword: ${repeatPassword}`);
         
     }
     return (
@@ -15,7 +21,7 @@ export default function RegisterForm() {
         style={styles.formContainer}>
             <Input placeholder="Correo electrónico"
             containerStyle={styles.inputForm}
-            onChange={e => console.log(e.nativeEvent.text)}
+            onChange={e => setEmail(e.nativeEvent.text)}
             rightIcon={
                 <Icon 
                 type="material-community"
@@ -28,7 +34,7 @@ export default function RegisterForm() {
             password={true}
             secureTextEntry={hidePassword}
             containerStyle={styles.inputForm}
-            onChange={() => console.log('actualizado password')}
+            onChange={e => setPassword(e.nativeEvent.text)}
             rightIcon={
                 <Icon 
                 type="material-community"
@@ -42,7 +48,7 @@ export default function RegisterForm() {
             password={true}
             secureTextEntry={repeatHidePassword}
             containerStyle={styles.inputForm}
-            onChange={() => console.log('repetir actualizado password')}
+            onChange={e => setRepeatPassword(e.nativeEvent.text)}
             rightIcon={
                 <Icon 
                 type="material-community"
@@ -55,7 +61,7 @@ export default function RegisterForm() {
             <Button
                     containerStyle={styles.btnContainerRegister}
                     buttonStyle={styles.btnRegister}
-                    title="Ver tu perfil"
+                    title="Unirse"
                     onPress={register}
                 />
         </View>
