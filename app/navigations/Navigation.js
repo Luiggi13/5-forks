@@ -59,7 +59,7 @@ const NavigationStacks = createBottomTabNavigator(
             })
         }
     },{
-        initialRouteName: "Restaurants",
+        initialRouteName: "Account",
         order: [
             "Restaurants",
             "TopLists",
