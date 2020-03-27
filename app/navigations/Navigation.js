@@ -6,6 +6,7 @@ import {  createBottomTabNavigator } from "react-navigation-tabs";
 import RestaurantsScreenStacks from "./RestaurantsStacks";
 import TopListScreenStacks from "./TopListsStacks";
 import SearchScreenStacks from "./SearchStacks";
+import AccountScreenStacks from "./AccountStacks";
 
 const NavigationStacks = createBottomTabNavigator(
     {
@@ -40,6 +41,18 @@ const NavigationStacks = createBottomTabNavigator(
                 tabBarIcon: ({tintColor}) => (
                     <Icon type="material-community"
                     name="magnify"
+                    size={22} 
+                    color={tintColor}/>
+                )
+            })
+        },
+        Account: {
+            screen: AccountScreenStacks,
+            navigationOptions: () => ({
+                tabBarLabel: "Cuenta",
+                tabBarIcon: ({tintColor}) => (
+                    <Icon type="material-community"
+                    name="home-outline"
                     size={22} 
                     color={tintColor}/>
                 )
