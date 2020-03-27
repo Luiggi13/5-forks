@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View } from 'react-native';
 import * as firebase from 'firebase';
+import Loading from "../../components/Loading";
+import { Text, View } from 'react-native';
+
 export default function MyAccount() {
     const [login, setLogin] = useState(null);
 
@@ -11,11 +13,7 @@ export default function MyAccount() {
     }, []);
 
     if (login === null) {
-        return (
-            <View>
-                <Text>Cargando...</Text>
-            </View>
-        )
+        return <Loading isVisible={true} text="Cargando ..." />
     }
 
     if (login) {
