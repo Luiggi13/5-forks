@@ -58,6 +58,8 @@ const NavigationStacks = createBottomTabNavigator(
                 )
             })
         }
+    },{
+        initialRouteName: "Restaurants"
     }
 );
 
