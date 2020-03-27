@@ -1,9 +1,12 @@
 import React from 'react'
 import { Text, StyleSheet, View, ScrollView, Image } from 'react-native';
 import { Button } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 
-export default function UserGuest() {
+function UserGuest(props) {
+    const { navigation } = props;
+    
     return (
         <ScrollView style={styles.viewBody} centerContent={true} contentContainerStyle={{
             flexGrow: 1,
@@ -28,13 +31,14 @@ export default function UserGuest() {
                     buttonStyle={styles.btnStyle}
                     containerStyle={styles.btnContainer}
                     title="Ver tu perfil"
-                    onPress={ () => console.log('ver perfil')}
+                    onPress={ () => navigation.navigate("Login")}
                 />
             </View>
         </ScrollView>
     )
 }
 
+export default withNavigation(UserGuest);
 
 const styles = StyleSheet.create({
     viewBody: {
