@@ -25,6 +25,11 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.christian.cincotenedores",
+      "permissions": ["CAMERA_ROLL","LOCATION"],
+      "versionCode": 1
     }
   }
 }
