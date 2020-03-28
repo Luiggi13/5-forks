@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View} from "react-native";
+import { StyleSheet, View, Text} from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 
 export default function RegisterForm() {
@@ -7,14 +7,26 @@ export default function RegisterForm() {
     const [hidePassword, setHidePassword] = useState(true);
     const [repeatHidePassword, setRepeatHidePassword] = useState(true);
     const [email, setEmail] = useState("");
+    // const [data, setdata] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
+    // async function getMoviesFromApiAsync() {
+    //     try {
+    //       let response = await fetch('http://jsonplaceholder.typicode.com/users/1');
+    //       let json = await response.json();
+    //       setdata(...data,json.name);
+    //       return json.name;
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    // }
+
     const register = () => {
-        console.log(`Email: ${email}`);
-        console.log(`password: ${password}`);
-        console.log(`repeatPassword: ${repeatPassword}`);
-        
+        // console.log(`Email: ${email}`);
+        // console.log(`password: ${password}`);
+        // console.log(`repeatPassword: ${repeatPassword}`);
+        // getMoviesFromApiAsync();
     }
     return (
         <View
@@ -61,7 +73,7 @@ export default function RegisterForm() {
             <Button
                     containerStyle={styles.btnContainerRegister}
                     buttonStyle={styles.btnRegister}
-                    title="Unirse"
+                    title="Get from MockApi.io"
                     onPress={register}
                 />
         </View>
