@@ -8,10 +8,11 @@ function UserGuest(props) {
     const { navigation } = props;
     
     return (
-        <ScrollView style={styles.viewBody} centerContent={true} contentContainerStyle={{
+        <ScrollView style={styles.viewBody} centerContent={true} >
+        {/* <ScrollView style={styles.viewBody} centerContent={true} contentContainerStyle={{
             flexGrow: 1,
             justifyContent: 'center'
-        }}>
+        }}> */}
             <Image
                 source={require("../../../assets/img/user-guest.jpg")}
                 style={styles.image}
