@@ -1,7 +1,7 @@
 import React, { useState, createRef } from 'react';
 import { StyleSheet, View, Animated } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
-import { validateEmail, minLengthValidation } from "../../utils/Validation";
+import { validateEmail } from "../../utils/Validation";
 // import { validateEmail } from "../../utils/Validation";
 // import { withNavigation } from "react-navigation";
 import Loading from "../Loading";
@@ -17,12 +17,7 @@ export default function LoginForm(props) {
     const myInput = createRef();
     // toastRef.current.show("Todos los campos son obligatorios");
     const login = () => {
-        // setIsVisibleLoading(true);
-        if (!minLengthValidation(password, 8)) {
-            console.log('error');
-            
-        }
-        
+        setIsVisibleLoading(true);
         if(!email || !password) {
             toastRef.current.show("Todos los campos son obligatorios");
         } else {
