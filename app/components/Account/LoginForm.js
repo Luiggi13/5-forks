@@ -14,7 +14,9 @@ function LoginForm(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const myInput = createRef();
-    // toastRef.current.show("Todos los campos son obligatorios");
+    const secondInput = createRef();
+    const buttonReference = createRef();
+
     const login = async () => {
         setIsVisibleLoading(true);
         if(!email || !password) {
@@ -50,6 +52,8 @@ function LoginForm(props) {
             placeholder="Correo electrónico"
             containerStyle={styles.inputForm}
             ref={myInput}
+            onSubmitEditing={() => { secondInput.current.focus(); }}
+            returnKeyType = { "next" }
             value={email}
             onChange={e => setEmail(e.nativeEvent.text)}
             rightIcon={
@@ -68,9 +72,12 @@ function LoginForm(props) {
             />
             <Input
             placeholder="Contraseña"
+            ref={secondInput}
+            returnKeyType = { "send" }
             password={true}
             secureTextEntry={hidePassword}
             containerStyle={styles.inputForm}
+            onSubmitEditing={login }
             onChange={e => setPassword(e.nativeEvent.text)}
             rightIcon={
                 <Icon
@@ -82,6 +89,7 @@ function LoginForm(props) {
             }
             />
             <Button
+                ref={buttonReference}
                 containerStyle={styles.btnContainerRegister}
                 buttonStyle={styles.btnRegister}
                 title="iniciar sesión"
