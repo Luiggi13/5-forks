@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 // import { validateEmail } from "../../utils/Validation";
@@ -11,6 +11,7 @@ export default function LoginForm() {
     const [hidePassword, setHidePassword] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const myInput = createRef();
     const login = () => {
         
     }
@@ -19,12 +20,20 @@ export default function LoginForm() {
             <Input
             placeholder="Correo electrónico"
             containerStyle={styles.inputForm}
+            ref={myInput}
+            value={email}
             onChange={e => setEmail(e.nativeEvent.text)}
             rightIcon={
                 <Icon
                     type="material-community"
                     name="at"
                     iconStyle={styles.iconRight}
+                    onPress={e => {
+                        let emailTemp = email;
+                        emailTemp += "@";
+                        setEmail(emailTemp);
+                        myInput.current.focus(); 
+                    }}
                 />
             }
             />
