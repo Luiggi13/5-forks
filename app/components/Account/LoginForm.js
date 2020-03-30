@@ -9,9 +9,9 @@ import { Input, Icon, Button } from "react-native-elements";
 
 export default function LoginForm() {
     const [hidePassword, setHidePassword] = useState(true);
-
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const login = () => {
-        console.log('logueando');
         
     }
     return (
@@ -19,7 +19,7 @@ export default function LoginForm() {
             <Input
             placeholder="Correo electrónico"
             containerStyle={styles.inputForm}
-            onChange={e => console.log(e.nativeEvent.text)}
+            onChange={e => setEmail(e.nativeEvent.text)}
             rightIcon={
                 <Icon
                     type="material-community"
@@ -33,7 +33,7 @@ export default function LoginForm() {
             password={true}
             secureTextEntry={hidePassword}
             containerStyle={styles.inputForm}
-            onChange={e => console.log(e.nativeEvent.text)}
+            onChange={e => setPassword(e.nativeEvent.text)}
             rightIcon={
                 <Icon
                     type="material-community"
