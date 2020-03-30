@@ -2,21 +2,20 @@ import React, { useState, createRef } from 'react';
 import { StyleSheet, View, Animated } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/Validation";
-// import { validateEmail } from "../../utils/Validation";
-// import { withNavigation } from "react-navigation";
+import { withNavigation } from "react-navigation";
 import Loading from "../Loading";
-// import * as firebase from "firebase";
+import * as firebase from "firebase";
 
 
-export default function LoginForm(props) {
-    const { toastRef } = props;    
+function LoginForm(props) {
+    const { toastRef, navigation } = props;    
     const [hidePassword, setHidePassword] = useState(true);
     const [isVisibleLoading, setIsVisibleLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const myInput = createRef();
     // toastRef.current.show("Todos los campos son obligatorios");
-    const login = () => {
+    const login = async () => {
         setIsVisibleLoading(true);
         if(!email || !password) {
             toastRef.current.show("Todos los campos son obligatorios");
@@ -24,7 +23,23 @@ export default function LoginForm(props) {
             if (!validateEmail(email)) {
                 toastRef.current.show("Introduce un email válido");
             } else {
-                console.log('correcto');
+                await firebase
+                            .auth()
+                            .signInWithEmailAndPassword(email,password)
+                            .then((response)=>{
+                                navigation.navigate("MyAccount");
+                            })
+                            .catch((err)=> {
+                                if (err.code === 'auth/wrong-password') {
+                                    toastRef.current.show("Credenciales incorrectas");
+                                } else {
+                                    if (err.code === 'auth/user-not-found') {
+                                        toastRef.current.show("No existe una cuenta con este email");
+                                    } else {
+                                            toastRef.current.show("Error de servidor");
+                                    }
+                                }
+                            });
             }
         }
         setIsVisibleLoading(false);
@@ -76,6 +91,7 @@ export default function LoginForm(props) {
         </View>
     )
 }
+export default withNavigation(LoginForm);
 
 const styles = StyleSheet.create({
     formContainer: {
