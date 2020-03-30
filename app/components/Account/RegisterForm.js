@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/Validation";
+import Loading from "../Loading";
 import * as firebase from "firebase";
 export default function RegisterForm(props) {
     const { toastRef } = props;
@@ -9,15 +10,14 @@ export default function RegisterForm(props) {
     const [hidePassword, setHidePassword] = useState(true);
     const [repeatHidePassword, setRepeatHidePassword] = useState(true);
     const [email, setEmail] = useState("");
+    const [isVisibleLoading, setIsVisibleLoading] = useState(false);
     // const [data, setdata] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
 
     const register = async () => {
-        console.log(email);
-        console.log(password);
-        console.log(repeatPassword);
+        setIsVisibleLoading(true);
 
         if (!email || !password || !repeatPassword) {
             toastRef.current.show("Todos los campos son obligatorios");
@@ -34,12 +34,17 @@ export default function RegisterForm(props) {
                             .then(()=>{
                                 toastRef.current.show("Usuario creado correctamente");
                             })
-                            .catch(()=> {
-                                toastRef.current.show("Error al crear la cuenta");
+                            .catch((err)=> {
+                                if (err.code === 'auth/email-already-in-use') {
+                                    toastRef.current.show("Ya existe una cuenta con este email");
+                                } else {
+                                    toastRef.current.show("Error al crear la cuenta");
+                                }
                             })
                 }
             }
         }
+        setIsVisibleLoading(false);
     }
 
 
@@ -91,6 +96,7 @@ export default function RegisterForm(props) {
                 title="Unirse"
                 onPress={register}
             />
+            <Loading isVisible={isVisibleLoading} text="Creando tu cuenta" />
         </View>
     )
 }
