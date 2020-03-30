@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/Validation";
-
+import * as firebase from "firebase";
 export default function RegisterForm() {
 
     const [hidePassword, setHidePassword] = useState(true);
@@ -13,7 +13,7 @@ export default function RegisterForm() {
     const [repeatPassword, setRepeatPassword] = useState("");
 
 
-    const register = () => {
+    const register = async () => {
         console.log(email);
         console.log(password);
         console.log(repeatPassword);
@@ -26,6 +26,17 @@ export default function RegisterForm() {
             } else {
                 if (password !== repeatPassword) {
                     console.log('las pass no son iguales');
+                } else {
+                    await firebase
+                            .auth()
+                            .createUserWithEmailAndPassword(email,password)
+                            .then(()=>{
+                                console.log('usuario creado correctamente')
+                            })
+                            .catch(()=> {
+                                console.log('Error al crear la cuenta');
+                                
+                            })
                 }
             }
         }
