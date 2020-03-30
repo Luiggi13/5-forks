@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/Validation";
+import { withNavigation } from "react-navigation";
 import Loading from "../Loading";
 import * as firebase from "firebase";
-export default function RegisterForm(props) {
-    const { toastRef } = props;
+
+function RegisterForm(props) {
+    const { toastRef, navigation } = props;
+    
     
     const [hidePassword, setHidePassword] = useState(true);
     const [repeatHidePassword, setRepeatHidePassword] = useState(true);
@@ -18,7 +21,6 @@ export default function RegisterForm(props) {
 
     const register = async () => {
         setIsVisibleLoading(true);
-
         if (!email || !password || !repeatPassword) {
             toastRef.current.show("Todos los campos son obligatorios");
         } else {
@@ -32,7 +34,8 @@ export default function RegisterForm(props) {
                             .auth()
                             .createUserWithEmailAndPassword(email,password)
                             .then(()=>{
-                                toastRef.current.show("Usuario creado correctamente");
+                                // toastRef.current.show("Usuario creado correctamente");
+                                navigation.navigate("MyAccount");
                             })
                             .catch((err)=> {
                                 if (err.code === 'auth/email-already-in-use') {
@@ -100,6 +103,8 @@ export default function RegisterForm(props) {
         </View>
     )
 }
+
+export default withNavigation(RegisterForm);
 
 const styles = StyleSheet.create({
     formContainer: {
