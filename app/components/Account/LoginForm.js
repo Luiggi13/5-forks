@@ -1,19 +1,38 @@
 import React, { useState, createRef } from 'react';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Animated } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
+import { validateEmail, minLengthValidation } from "../../utils/Validation";
 // import { validateEmail } from "../../utils/Validation";
 // import { withNavigation } from "react-navigation";
-// import Loading from "../Loading";
+import Loading from "../Loading";
 // import * as firebase from "firebase";
 
 
-export default function LoginForm() {
+export default function LoginForm(props) {
+    const { toastRef } = props;    
     const [hidePassword, setHidePassword] = useState(true);
+    const [isVisibleLoading, setIsVisibleLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const myInput = createRef();
+    // toastRef.current.show("Todos los campos son obligatorios");
     const login = () => {
+        // setIsVisibleLoading(true);
+        if (!minLengthValidation(password, 8)) {
+            console.log('error');
+            
+        }
         
+        if(!email || !password) {
+            toastRef.current.show("Todos los campos son obligatorios");
+        } else {
+            if (!validateEmail(email)) {
+                toastRef.current.show("Introduce un email válido");
+            } else {
+                console.log('correcto');
+            }
+        }
+        setIsVisibleLoading(false);
     }
     return (
         <View style={styles.formContainer}>
@@ -58,6 +77,7 @@ export default function LoginForm() {
                 title="iniciar sesión"
                 onPress={login}
             />
+            <Loading isVisible={isVisibleLoading} text="Iniciando sesión" />
         </View>
     )
 }
