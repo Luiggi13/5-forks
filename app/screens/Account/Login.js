@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, Text, Image } from "react-native";
 import { Divider } from "react-native-elements";
 import { withNavigation } from "react-navigation";
-
+import LoginForm from "../../components/Account/LoginForm";
 
 export default function Login(props) {
 
@@ -17,8 +17,7 @@ export default function Login(props) {
             <View
                 style={styles.viewContainer}
             >
-                <Text>login form inside</Text>
-                {/* <Text>Create account</Text> */}
+                <LoginForm />
                 <CreateAccount navigation={navigation} />
             </View>
             <Divider
