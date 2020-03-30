@@ -12,9 +12,6 @@ export default function Register() {
             <View
             style={styles.viewForm}
             >
-                <Text>
-                    Form register...
-                </Text>
                 <RegisterForm />
             </View>
         </KeyboardAwareScrollView>
