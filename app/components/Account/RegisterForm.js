@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text} from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
+import { validateEmail } from "../../utils/Validation";
 
 export default function RegisterForm() {
 
@@ -11,22 +12,14 @@ export default function RegisterForm() {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
-    // async function getMoviesFromApiAsync() {
-    //     try {
-    //       let response = await fetch('http://jsonplaceholder.typicode.com/users/1');
-    //       let json = await response.json();
-    //       setdata(...data,json.name);
-    //       return json.name;
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    // }
 
     const register = () => {
-        // console.log(`Email: ${email}`);
-        // console.log(`password: ${password}`);
-        // console.log(`repeatPassword: ${repeatPassword}`);
-        // getMoviesFromApiAsync();
+        console.log(`Email: ${email}`);
+        console.log(`password: ${password}`);
+        console.log(`repeatPassword: ${repeatPassword}`);
+        const resultEmailValidation = validateEmail(email);
+        console.log('validacion del email: ' + resultEmailValidation);
+        
     }
     return (
         <View
@@ -73,7 +66,7 @@ export default function RegisterForm() {
             <Button
                     containerStyle={styles.btnContainerRegister}
                     buttonStyle={styles.btnRegister}
-                    title="Get from MockApi.io"
+                    title="Unirse"
                     onPress={register}
                 />
         </View>
