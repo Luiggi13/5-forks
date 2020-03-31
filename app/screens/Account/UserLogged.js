@@ -8,6 +8,7 @@ import * as firebase from "firebase";
 export default function UserLogged() {
 
     const [userInfo, setUserInfo] = useState({});
+    const [reloadData, setReloadData] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -15,11 +16,12 @@ export default function UserLogged() {
             setUserInfo(user.providerData[0]);   
                      
         })();
-    }, [])
+        setReloadData(false);
+    }, [reloadData])
     
     return (
         <View>
-            <InfoUser userInfo={userInfo}/>
+            <InfoUser userInfo={userInfo} setReloadData={setReloadData}/>
             <Button
                 title="Cerrar sesión"
                 onPress={() => { firebase.auth().signOut()}}
