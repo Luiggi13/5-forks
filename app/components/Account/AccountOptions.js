@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text} from "react-native";
 import { ListItem } from "react-native-elements";
 import Modal from "../Modal";
+import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
+import ChangeEmailForm from "./ChangeEmailForm";
+import ChangePasswordForm from "./ChangePasswordForm";
+
 
 export default function AccountOptions(props) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [renderComponent, setRenderComponent] = useState(null);
 
     const menuOptions = [
         {
@@ -14,8 +19,7 @@ export default function AccountOptions(props) {
           iconColorLeft: "#ccc",
           iconNameRight: "chevron-right",
           iconColorRight: "#ccc",
-        //   onPress: () => selectedComponent("displayName")
-          onPress: () => selectedComponent()
+          onPress: () => selectedComponent("displayName")
         },
         {
           title: "Cambiar Email",
@@ -24,8 +28,7 @@ export default function AccountOptions(props) {
           iconColorLeft: "#ccc",
           iconNameRight: "chevron-right",
           iconColorRight: "#ccc",
-        //   onPress: () => selectedComponent("email")
-          onPress: () => console.log("email")
+          onPress: () => selectedComponent("email")
         },
         {
           title: "Cambiar Contraseña",
@@ -34,12 +37,26 @@ export default function AccountOptions(props) {
           iconColorLeft: "#ccc",
           iconNameRight: "chevron-right",
           iconColorRight: "#ccc",
-        //   onPress: () => selectedComponent("password")
-          onPress: () => console.log("password")
+          onPress: () => selectedComponent("password")
         }
     ];
-    const selectedComponent = () => {
-        setIsVisibleModal(true);
+    const selectedComponent = key => {
+        switch (key) {
+          case "displayName":
+            setRenderComponent(<ChangeDisplayNameForm />)
+            setIsVisibleModal(true);
+            break;
+          case "email":
+            setRenderComponent(<ChangeEmailForm />)
+            setIsVisibleModal(true);
+            break;
+          case "password":
+            setRenderComponent(<ChangePasswordForm />)
+            setIsVisibleModal(true);
+              break;
+          default:
+            break;
+        }
     }
 
     return (
@@ -62,11 +79,11 @@ export default function AccountOptions(props) {
                     containerStyle={styles.menuItem}
                 />
             ))}
-            <Modal isVisible={isVisibleModal} setIsVisible={setIsVisibleModal}>
-              <View>
-                <Text>Estoy en la modal</Text>
-              </View>
+            {renderComponent && (
+              <Modal isVisible={isVisibleModal} setIsVisible={setIsVisibleModal}>
+              {renderComponent}
             </Modal>
+            )}
         </View>
     )
 }
