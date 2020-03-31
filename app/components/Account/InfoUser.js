@@ -20,6 +20,10 @@ console.log(props);
             containerStyle={styles.userInfoAvatar}
             source={{uri: photoURL ? photoURL : "https://api.adorable.io/avatars/eyes5"}}
             />
+            <View style={styles.displayName}>
+                <Text>{displayName ? displayName : "Anónimo"}</Text>
+                <Text>{email ? email : "Social Login"}</Text>
+            </View>
         </View>
     )
 }
@@ -36,5 +40,9 @@ const styles = StyleSheet.create({
     },
     userInfoAvatar: {
         marginRight:20
+    },
+    displayName: {
+        fontWeight: "bold"
+
     }
 });
