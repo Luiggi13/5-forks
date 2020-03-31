@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 export default function InfoUser(props) {
     const { 
         userInfo: {photoURL, uid, displayName, email},
-        setReloadData, toastRef
+        setReloadData, toastRef, setIsLoading, setTextLoading
     } = props;
     
     const changeAvatar = async () => {
@@ -29,20 +29,22 @@ export default function InfoUser(props) {
             } else {
                 uploadImage(result.uri,uid)
                     .then(()=>{
-                        updatePhotUrl(uid);
+                        updatePhotoUrl(uid);
                     })
             }   
         }
     };
 
     const uploadImage = async (uri, nameImage) => {
+        setTextLoading("Actualizando avatar");
+        setIsLoading(true);
         const response = await fetch(uri);
         const blob = await response.blob();
         const ref =  firebase.storage().ref().child(`avatar/${nameImage}`);
         return ref.put(blob);
     }
 
-    const updatePhotUrl = uid => {
+    const updatePhotoUrl = uid => {
         firebase.storage().ref(`avatar/${uid}`).getDownloadURL()
         .then(async result =>{
             const update= {
@@ -50,6 +52,7 @@ export default function InfoUser(props) {
             }
             await firebase.auth().currentUser.updateProfile(update);
             setReloadData(true);
+            setIsLoading(false);
         })
         .catch(()=>{
             toastRef.current.show("Error al recuperar el avatar del seervidor");
