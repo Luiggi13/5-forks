@@ -8,6 +8,9 @@ import ChangePasswordForm from "./ChangePasswordForm";
 
 
 export default function AccountOptions(props) {
+  const { userInfo,setReloadData, toastRef } = props;
+
+  
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
 
@@ -43,7 +46,10 @@ export default function AccountOptions(props) {
     const selectedComponent = key => {
         switch (key) {
           case "displayName":
-            setRenderComponent(<ChangeDisplayNameForm />)
+            setRenderComponent(<ChangeDisplayNameForm displayName={userInfo.displayName}
+              setIsVisibleModal={setIsVisibleModal}
+              setReloadData={setReloadData}
+              toastRef={toastRef} />)
             setIsVisibleModal(true);
             break;
           case "email":
