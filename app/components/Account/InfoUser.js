@@ -1,17 +1,46 @@
 import React from 'react'
 import { Text, StyleSheet, View } from 'react-native';
 import { Button, Avatar } from "react-native-elements";
+import * as firebase from "firebase";
+import * as Permissions from "expo-permissions";
+import * as ImagePicker from "expo-image-picker";
+
 
 export default function InfoUser(props) {
-console.log(props);
-
     const { 
         userInfo: {photoURL, uid, displayName, email}
     } = props;
     
-    const changeAvatar = () => {
-        console.log('cambiando avatar');
-    }    
+    const changeAvatar = async () => {
+        const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        const resultPermissionCamera = resultPermission.permissions.cameraRoll.status
+
+        if (resultPermissionCamera === "denied") {
+            console.log("Es necesario aceptar los permisos de la galeria ");
+        } else {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [4, 3]
+            });
+
+            if(result.cancelled) {
+                console.log('has cancelado la galería');
+            } else {
+                uploadImage(result.uri,uid)
+                    .then(()=>{
+                        console.log('imagen subida correctamente');
+                        
+                    })
+            }   
+        }
+    };
+
+    const uploadImage = async (uri, nameImage) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const ref =  firebase.storage().ref().child(`avatar/${nameImage}`);
+        return ref.put(blob);
+    }
     return (
         <View style={styles.viewuserInfo}>
             <Avatar rounded size="large"
