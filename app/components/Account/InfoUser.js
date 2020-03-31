@@ -29,7 +29,7 @@ export default function InfoUser(props) {
                 uploadImage(result.uri,uid)
                     .then(()=>{
                         console.log('imagen subida correctamente');
-                        
+                        updatePhotUrl(uid);
                     })
             }   
         }
@@ -40,6 +40,20 @@ export default function InfoUser(props) {
         const blob = await response.blob();
         const ref =  firebase.storage().ref().child(`avatar/${nameImage}`);
         return ref.put(blob);
+    }
+
+    const updatePhotUrl = uid => {
+        firebase.storage().ref(`avatar/${uid}`).getDownloadURL()
+        .then(async result =>{
+            const update= {
+                photoURL: result
+            }
+            await firebase.auth().currentUser.updateProfile(update);
+        })
+        .catch(()=>{
+            console.log("Error al recuperar el avatar del seervidor");
+            
+        })
     }
     return (
         <View style={styles.viewuserInfo}>
