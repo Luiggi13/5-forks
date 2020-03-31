@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 export default function InfoUser(props) {
     const { 
         userInfo: {photoURL, uid, displayName, email},
-        setReloadData
+        setReloadData, toastRef
     } = props;
     
     const changeAvatar = async () => {
@@ -17,7 +17,7 @@ export default function InfoUser(props) {
         const resultPermissionCamera = resultPermission.permissions.cameraRoll.status
 
         if (resultPermissionCamera === "denied") {
-            console.log("Es necesario aceptar los permisos de la galeria ");
+            toastRef.current.show("Es necesario aceptar los permisos.");
         } else {
             const result = await ImagePicker.launchImageLibraryAsync({
                 allowsEditing: true,
@@ -25,11 +25,10 @@ export default function InfoUser(props) {
             });
 
             if(result.cancelled) {
-                console.log('has cancelado la galería');
+                toastRef.current.show("Acción cancelada");
             } else {
                 uploadImage(result.uri,uid)
                     .then(()=>{
-                        console.log('imagen subida correctamente');
                         updatePhotUrl(uid);
                     })
             }   
@@ -53,8 +52,7 @@ export default function InfoUser(props) {
             setReloadData(true);
         })
         .catch(()=>{
-            console.log("Error al recuperar el avatar del seervidor");
-            
+            toastRef.current.show("Error al recuperar el avatar del seervidor");
         })
     }
     return (
