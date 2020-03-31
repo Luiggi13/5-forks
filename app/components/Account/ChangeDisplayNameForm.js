@@ -2,9 +2,11 @@ import React from 'react'
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from "react-native-elements";
 import * as firebase from "firebase";
-export default function ChangeDisplayNameForm() {
+export default function ChangeDisplayNameForm(props) {
 
-
+    const { displayName, setIsVisibleModal, setReloadData, toastRef } = props;
+    console.log(props);
+    
     
     const updateDisplayName = () => {
         console.log("Nombre actualizado");
@@ -22,7 +24,7 @@ export default function ChangeDisplayNameForm() {
           }}
         //   errorMessage={}
         //   onChange={}
-        //   defaultValue=""
+          defaultValue={displayName && displayName}
           />
           <Button
         title="Cambiar nombre"
