@@ -8,7 +8,8 @@ import * as ImagePicker from "expo-image-picker";
 
 export default function InfoUser(props) {
     const { 
-        userInfo: {photoURL, uid, displayName, email}
+        userInfo: {photoURL, uid, displayName, email},
+        setReloadData
     } = props;
     
     const changeAvatar = async () => {
@@ -49,6 +50,7 @@ export default function InfoUser(props) {
                 photoURL: result
             }
             await firebase.auth().currentUser.updateProfile(update);
+            setReloadData(true);
         })
         .catch(()=>{
             console.log("Error al recuperar el avatar del seervidor");
