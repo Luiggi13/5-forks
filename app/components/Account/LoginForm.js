@@ -77,7 +77,7 @@ function LoginForm(props) {
             password={true}
             secureTextEntry={hidePassword}
             containerStyle={styles.inputForm}
-            onSubmitEditing={login }
+            onSubmitEditing={login}
             onChange={e => setPassword(e.nativeEvent.text)}
             rightIcon={
                 <Icon

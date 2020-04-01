@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import { StyleSheet, View } from "react-native";
-import { Input, Button } from "react-native-elements";
+import { Input, Button, Icon } from "react-native-elements";
 import * as firebase from "firebase";
 import { reauthenticate } from "../../utils/Api";
 
@@ -11,6 +11,9 @@ export default function ChangeEmailForm(props) {
   const [error, setError] = useState({});
   const [hidePassword, setHidePassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const myInput = createRef();
+  const secondInput = createRef();
+  const buttonReference = createRef();
 
   const updateEmail = () => {
     setError({});
@@ -48,18 +51,32 @@ export default function ChangeEmailForm(props) {
         containerStyle={styles.input}
         defaultValue={email && email}
         onChange={e => setNewEmail(e.nativeEvent.text)}
-        rightIcon={{
-          type: "material-community",
-          name: "at",
-          color: "#c2c2c2"
-        }}
+        rightIcon={
+            <Icon
+                type="material-community"
+                name="at"
+                iconStyle={{color: "#c2c2c2"}}
+                onPress={e => {
+                    let emailTemp = newEmail;
+                    console.log(emailTemp);
+                    
+                    emailTemp += "@";
+                    setNewEmail(emailTemp);
+                    myInput.current.focus(); 
+                }}
+            />
+        }
         errorMessage={error.email}
+        ref={myInput}
+        onSubmitEditing={() => { secondInput.current.focus(); }}
+        returnKeyType = { "next" }
       />
       <Input
         placeholder="Contraseña"
         containerStyle={styles.input}
         password={true}
         secureTextEntry={hidePassword}
+        onSubmitEditing={updateEmail}
         onChange={e => setPassword(e.nativeEvent.text)}
         rightIcon={{
           type: "material-community",
@@ -68,8 +85,11 @@ export default function ChangeEmailForm(props) {
           onPress: () => setHidePassword(!hidePassword)
         }}
         errorMessage={error.password}
+        ref={secondInput}
+        returnKeyType = { "send" }
       />
       <Button
+        ref={buttonReference}
         title="Cambiar email"
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
