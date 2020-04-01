@@ -33,7 +33,7 @@ export default function UserLogged() {
             setIsLoading={setIsLoading}
             setTextLoading={setTextLoading}
             />
-            <View style={{ paddingTop: 10, marginLeft: "2.5%", backgroundColor: "#fff", borderRadius: 15, marginTop: -50, width:"95%"}}>
+            <View style={{ paddingTop: 0, marginLeft: "2.5%", backgroundColor: "#fff", borderRadius: 15, marginTop: -40, width:"95%"}}>
                 <AccountOptions userInfo={userInfo} setReloadData={setReloadData} toastRef={toastRef}/>
             </View>
             <Button

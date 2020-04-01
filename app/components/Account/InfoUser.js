@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, ImageBackground } from 'react-native';
 import { Button, Avatar } from "react-native-elements";
 import * as firebase from "firebase";
 import * as Permissions from "expo-permissions";
@@ -60,6 +60,8 @@ export default function InfoUser(props) {
     }
     return (
         <View style={styles.viewuserInfo}>
+            <ImageBackground source={require("../../../assets/img/bgInfoUser.jpg")} style={styles.imageBg}>
+ </ImageBackground>
             {/* <View style={styles.displayName}>
                 <Text>{displayName ? displayName : "Anónimo"}</Text>
                 <Text>{email ? email : "Social Login"}</Text>
@@ -79,6 +81,8 @@ export default function InfoUser(props) {
                     <Text style={styles.displayEmail}>{email ? email : "Social Login"}</Text>
                 </View>
             </View>
+           
+
         </View>
     )
 }
@@ -86,6 +90,7 @@ export default function InfoUser(props) {
 
 const styles = StyleSheet.create({
     viewuserInfo: {
+        position: "relative",
         flexDirection: "row",
         backgroundColor: "#ff5c39",
         paddingTop: 20,
@@ -110,5 +115,18 @@ const styles = StyleSheet.create({
     },
     containerUserInfo: {
         justifyContent: "center"
-    }
+    },
+    imageBg: {
+        // flex: 1,
+        flexDirection:"column",
+        marginTop: -20,
+        paddingTop: 20,
+        paddingBottom: 20,
+        resizeMode: "cover",
+        position: "absolute",
+        top:20,
+        width: "100%",
+        height: 180
+        // justifyContent: "center"
+      }
 });
