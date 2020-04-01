@@ -82,7 +82,7 @@ export default function AccountOptions(props) {
                         name: menu.iconNameRight,
                         color: menu.iconColorRight
                     }}
-                    onPress={()=>myStyle(index)}
+                    onPress={menu.onPress}
                     containerStyle={ index+1 === menuOptions.length ? styles.menuItemLast : styles.menuItem}
                 />
             ))}
