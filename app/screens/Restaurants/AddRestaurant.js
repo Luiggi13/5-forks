@@ -8,7 +8,3 @@ export default function AddRestaurant() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    
-  });
