@@ -25,7 +25,7 @@ export default function UserLogged() {
     }, [reloadData])
     
     return (
-        <View>
+        <View style={styles.viewBackground}>
             <InfoUser style={styles.viewUserInfo}
             userInfo={userInfo}
             setReloadData={setReloadData}
@@ -33,7 +33,9 @@ export default function UserLogged() {
             setIsLoading={setIsLoading}
             setTextLoading={setTextLoading}
             />
-            <AccountOptions userInfo={userInfo} setReloadData={setReloadData} toastRef={toastRef}/>
+            <View style={{ paddingTop: 10, marginLeft: "2.5%", backgroundColor: "#fff", borderRadius: 15, marginTop: -50, width:"95%"}}>
+                <AccountOptions userInfo={userInfo} setReloadData={setReloadData} toastRef={toastRef}/>
+            </View>
             <Button
             buttonStyle={styles.btnCloseSession}
             titleStyle={styles.btnCloseSessionText}
@@ -47,9 +49,13 @@ export default function UserLogged() {
 }
 
 const styles = StyleSheet.create({
-    viewUserInfo: {
+    viewBackground: {
         minHeight: "100%",
         backgroundColor: "#f2f2f2"
+      },
+    viewUserInfo: {
+        height: "600",
+        backgroundColor: "#0f1733"
       },
       btnCloseSession: {
         marginTop: 30,

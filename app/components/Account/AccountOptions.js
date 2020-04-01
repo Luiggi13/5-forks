@@ -43,6 +43,8 @@ export default function AccountOptions(props) {
           onPress: () => selectedComponent("password")
         }
     ];
+
+    
     const selectedComponent = key => {
         switch (key) {
           case "displayName":
@@ -64,9 +66,8 @@ export default function AccountOptions(props) {
             break;
         }
     }
-
     return (
-        <View style={{backgroundColor:"#df0000"}}>
+        <View>
             {menuOptions.map((menu, index) => (
                 <ListItem
                     key={index}
@@ -81,8 +82,8 @@ export default function AccountOptions(props) {
                         name: menu.iconNameRight,
                         color: menu.iconColorRight
                     }}
-                    onPress={menu.onPress}
-                    containerStyle={styles.menuItem}
+                    onPress={()=>myStyle(index)}
+                    containerStyle={ index+1 === menuOptions.length ? styles.menuItemLast : styles.menuItem}
                 />
             ))}
             {renderComponent && (
@@ -99,6 +100,11 @@ export default function AccountOptions(props) {
 const styles = StyleSheet.create({
     menuItem: {
         borderBottomWidth: 1,
-        borderBottomColor: "#e3e3e3"
+        borderBottomColor: "#e3e3e3",
+        backgroundColor: "rgba(255,255,255,0)"
+    },
+    menuItemLast: {
+      borderBottomWidth: 0,
+      backgroundColor: "rgba(255,255,255,0)"
     }
 });

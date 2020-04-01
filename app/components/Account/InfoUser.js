@@ -7,11 +7,11 @@ import * as ImagePicker from "expo-image-picker";
 
 
 export default function InfoUser(props) {
-    const { 
-        userInfo: {photoURL, uid, displayName, email},
+    const {
+        userInfo: { photoURL, uid, displayName, email },
         setReloadData, toastRef, setIsLoading, setTextLoading
     } = props;
-    
+
     const changeAvatar = async () => {
         const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         const resultPermissionCamera = resultPermission.permissions.cameraRoll.status
@@ -24,14 +24,14 @@ export default function InfoUser(props) {
                 aspect: [4, 3]
             });
 
-            if(result.cancelled) {
+            if (result.cancelled) {
                 toastRef.current.show("Acción cancelada");
             } else {
-                uploadImage(result.uri,uid)
-                    .then(()=>{
+                uploadImage(result.uri, uid)
+                    .then(() => {
                         updatePhotoUrl(uid);
                     })
-            }   
+            }
         }
     };
 
@@ -40,35 +40,44 @@ export default function InfoUser(props) {
         setIsLoading(true);
         const response = await fetch(uri);
         const blob = await response.blob();
-        const ref =  firebase.storage().ref().child(`avatar/${nameImage}`);
+        const ref = firebase.storage().ref().child(`avatar/${nameImage}`);
         return ref.put(blob);
     }
 
     const updatePhotoUrl = uid => {
         firebase.storage().ref(`avatar/${uid}`).getDownloadURL()
-        .then(async result =>{
-            const update= {
-                photoURL: result
-            }
-            await firebase.auth().currentUser.updateProfile(update);
-            setReloadData(true);
-            setIsLoading(false);
-        })
-        .catch(()=>{
-            toastRef.current.show("Error al recuperar el avatar del seervidor");
-        })
+            .then(async result => {
+                const update = {
+                    photoURL: result
+                }
+                await firebase.auth().currentUser.updateProfile(update);
+                setReloadData(true);
+                setIsLoading(false);
+            })
+            .catch(() => {
+                toastRef.current.show("Error al recuperar el avatar del seervidor");
+            })
     }
     return (
         <View style={styles.viewuserInfo}>
-            <Avatar rounded size="large"
-            showEditButton
-            onEditPress={changeAvatar}
-            containerStyle={styles.userInfoAvatar}
-            source={{uri: photoURL ? photoURL : "https://api.adorable.io/avatars/eyes5"}}
-            />
-            <View style={styles.displayName}>
+            {/* <View style={styles.displayName}>
                 <Text>{displayName ? displayName : "Anónimo"}</Text>
                 <Text>{email ? email : "Social Login"}</Text>
+            </View> */}
+            <View style={styles.containerModules}>
+
+                <View style={styles.containerAvatar}>
+                    <Avatar rounded size="large"
+                        showEditButton
+                        onEditPress={changeAvatar}
+                        containerStyle={styles.userInfoAvatar}
+                        source={{ uri: photoURL ? photoURL : "https://api.adorable.io/avatars/eyes5" }}
+                    />
+                </View>
+                <View style={styles.containerUserInfo}>
+                    <Text style={styles.displayName}>{displayName ? displayName : "Anónimo"}</Text>
+                    <Text style={styles.displayEmail}>{email ? email : "Social Login"}</Text>
+                </View>
             </View>
         </View>
     )
@@ -78,17 +87,28 @@ export default function InfoUser(props) {
 const styles = StyleSheet.create({
     viewuserInfo: {
         flexDirection: "row",
-        backgroundColor: "#f2f2f2",
-        paddingTop: 30,
-        paddingBottom: 30,
+        backgroundColor: "#ff5c39",
+        paddingTop: 20,
+        paddingBottom: 70,
         alignItems: "center",
-        justifyContent: "center",
+    },
+    containerAvatar: {
+        marginLeft: 20
     },
     userInfoAvatar: {
-        marginRight:20
+        marginRight: 20
     },
     displayName: {
+        color: "white",
         fontWeight: "bold"
-
+    },
+    displayEmail: {
+        color: "white"
+    },
+    containerModules: {
+        flexDirection: 'row'
+    },
+    containerUserInfo: {
+        justifyContent: "center"
     }
 });
