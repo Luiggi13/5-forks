@@ -63,22 +63,23 @@ export default function AddRestaurantForm(props) {
     }
   };
 
-  const uploadImagesStorage = async imageArray=>{
-    const imagesBlod=[];
+  const uploadImagesStorage = async imageArray => {
+    const imagesBlob = [];
     await Promise.all(
-        imageArray.map(async image=>{
-         
-            const response=await fetch(image);
-            const blob=await response.blob();
-            const ref =firebase.storage().ref("restaurant-images").child(uuidv5(image,uuidv5.URL));
-            await ref.put(blob).then(result=>{
-                imagesBlod.push(result.metadata.name);
-           
-            });
-        })
+      imageArray.map(async image => {
+        const response = await fetch(image);
+        const blob = await response.blob();
+        const ref = firebase
+          .storage()
+          .ref("restaurant-images")
+          .child(Math.floor((Math.random() * 100) + 1).toString())  ;
+        await ref.put(blob).then(result => {
+          imagesBlob.push(result.metadata.name);
+        });
+      })
     );
-    return imagesBlod;
-};
+    return imagesBlob;
+  };
 
   return (
     <ScrollView>
