@@ -13,6 +13,7 @@ export default function AddRestaurantForm(props) {
     return (
         <ScrollView>
             <ImageRestaurant imageRestaurant={imagesSelected[0]} />
+            <FormAdd />
             <UploadImage toastRef={toastRef} imagesSelected={imagesSelected} setImagesSelected={setImagesSelected} />
         </ScrollView>
     )
@@ -31,7 +32,7 @@ function ImageRestaurant(props) {
           />
         ) : (
           <Image
-            source={require("../../../assets/img/no-image.png")}
+            source={require("../../../assets/img/no-image.jpg")}
             style={{ width: WidthScreen, height: 200 }}
           />
         )}
@@ -93,6 +94,7 @@ function UploadImage(props) {
         )
 
     }
+
     return (
         <View style={styles.viewImages}>
 
@@ -108,6 +110,37 @@ function UploadImage(props) {
             {imagesSelected.map(image => (
                 <Avatar key={image} onPress={() => removeImage(image)} style={styles.thumbnail} source={{uri: image}} />
             ))}
+        </View>
+    )
+}
+
+function FormAdd(props) {
+    return (
+        <View style={styles.viewForm}>
+            <Input
+            placeholder="Nombre del restaurante"
+            containerStyle={styles.input}
+            onChange={() => console.log('nombre del restaurante actualizado')}
+             />
+            <Input
+            placeholder="Dirección"
+            containerStyle={styles.input}
+            rightIcon={
+                {
+                    type: "material-comunnity",
+                    name: "map",
+                    color: "#c2c2c2",
+                    onPress: () => console.log('selecciona localizacion')
+                }
+            }
+            onChange={() => console.log('dirección del restaurante actualizado')}
+             />
+             <Input
+            placeholder="Descripción del restaurante"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChange={() => console.log('Descripción del restaurante actualizado')}
+             />
         </View>
     )
 }
@@ -131,5 +164,16 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         marginRight: 10    
-    }
+    },
+    viewForm: {
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    input: {
+        marginBottom: 10
+    },
+    textArea: {
+        height: 100,
+        width: "100%",
+      }
  });
