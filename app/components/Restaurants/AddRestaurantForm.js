@@ -9,11 +9,14 @@ const WidthScreen = Dimensions.get("window").width;
 export default function AddRestaurantForm(props) {
     const { navigation, setIsLoading, toastRef} = props;
     const [imagesSelected, setImagesSelected] = useState([]);
-    
+    const [restaurantName, setRestaurantName] = useState("");
+    const [restaurantAddress, setRestaurantAddress] = useState("");
+    const [restaurantDescription, setRestaurantDescription] = useState("");
+
     return (
         <ScrollView>
             <ImageRestaurant imageRestaurant={imagesSelected[0]} />
-            <FormAdd />
+            <FormAdd setRestaurantName={setRestaurantName} setRestaurantAddress={setRestaurantAddress} setRestaurantDescription={setRestaurantDescription}/>
             <UploadImage toastRef={toastRef} imagesSelected={imagesSelected} setImagesSelected={setImagesSelected} />
         </ScrollView>
     )
@@ -115,12 +118,13 @@ function UploadImage(props) {
 }
 
 function FormAdd(props) {
+    const {  setRestaurantName, setRestaurantAddress, setRestaurantDescription } = props;
     return (
         <View style={styles.viewForm}>
             <Input
             placeholder="Nombre del restaurante"
             containerStyle={styles.input}
-            onChange={() => console.log('nombre del restaurante actualizado')}
+            onChange={e => setRestaurantName(e.nativeEvent.text)}
              />
             <Input
             placeholder="Dirección"
@@ -133,13 +137,13 @@ function FormAdd(props) {
                     onPress: () => console.log('selecciona localizacion')
                 }
             }
-            onChange={() => console.log('dirección del restaurante actualizado')}
+            onChange={e => setRestaurantAddress(e.nativeEvent.text)}
              />
              <Input
             placeholder="Descripción del restaurante"
             multiline={true}
             inputContainerStyle={styles.textArea}
-            onChange={() => console.log('Descripción del restaurante actualizado')}
+            onChange={e => setRestaurantDescription(e.nativeEvent.text)}
              />
         </View>
     )
