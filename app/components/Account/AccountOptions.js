@@ -67,31 +67,32 @@ export default function AccountOptions(props) {
         }
     }
     return (
-        <View>
-            {menuOptions.map((menu, index) => (
-                <ListItem
-                    key={index}
-                    title={menu.title}
-                    leftIcon={{
-                        type: menu.iconType,
-                        name: menu.iconNameLeft,
-                        color: menu.iconColorLeft
-                    }}
-                    rightIcon={{
-                        type: menu.iconType,
-                        name: menu.iconNameRight,
-                        color: menu.iconColorRight
-                    }}
-                    onPress={menu.onPress}
-                    containerStyle={ index+1 === menuOptions.length ? styles.menuItemLast : styles.menuItem}
-                />
-            ))}
-            {renderComponent && (
-              <Modal isVisible={isVisibleModal} setIsVisible={setIsVisibleModal}>
-              {renderComponent}
-            </Modal>
-            )}
-        </View>
+      <View>
+      {menuOptions.map((menu, index) => (
+        <ListItem
+          key={index}
+          title={menu.title}
+          leftIcon={{
+            type: menu.iconType,
+            name: menu.iconNameLeft,
+            color: menu.iconColorLeft
+          }}
+          rightIcon={{
+            type: menu.iconType,
+            name: menu.iconNameRight,
+            color: menu.iconColorRight
+          }}
+          onPress={menu.onPress}
+          containerStyle={styles.menuItem}
+        />
+      ))}
+
+      {renderComponent && (
+        <Modal isVisible={isVisibleModal} setIsVisible={setIsVisibleModal}>
+          {renderComponent}
+        </Modal>
+      )}
+    </View>
     )
 }
 

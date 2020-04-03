@@ -6,15 +6,15 @@ import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
 import Modal from "../Modal";
-import 'react-native-get-random-values';
-import { v5 as uuidv5 } from 'uuid';
+import uuid from 'uuid-random';
 
-import { firebaseApp, create_UUID } from "../../utils/Firebase";
+import { firebaseApp } from "../../utils/Firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 const WidthScreen = Dimensions.get("window").width;
+
 
 export default function AddRestaurantForm(props) {
   const { toastRef, setIsLoading, navigation, setIsReloadRestaurants } = props;
@@ -26,6 +26,8 @@ export default function AddRestaurantForm(props) {
   const [locationRestaurant, setLocationRestaurant] = useState(null);
 
   const addRestaurant = () => {
+    console.log('uuid()');
+    console.log(uuid());
     if (!restaurantName || !restaurantAddress || !restaurantDescription) {
       toastRef.current.show("Todos los campos del formulario son obligatorios");
     } else if (imagesSelected.length === 0) {
@@ -54,6 +56,8 @@ export default function AddRestaurantForm(props) {
             navigation.navigate("Restaurants");
           })
           .catch(error => {
+              console.log(error);
+              
             setIsLoading(false);
             toastRef.current.show(
               "Error al subir el restaurante, intento más tarde"
@@ -63,16 +67,20 @@ export default function AddRestaurantForm(props) {
     }
   };
 
+
+    
+    
   const uploadImagesStorage = async imageArray => {
+    console.log('asdas');
+
     const imagesBlob = [];
     await Promise.all(
       imageArray.map(async image => {
         const response = await fetch(image);
         const blob = await response.blob();
-        const ref = firebase
-          .storage()
-          .ref("restaurant-images")
-          .child(Math.floor((Math.random() * 100) + 1).toString())  ;
+        const ref = firebase.storage().ref("restaurant-images")
+          .child(uuid())  ;
+          
         await ref.put(blob).then(result => {
           imagesBlob.push(result.metadata.name);
         });
